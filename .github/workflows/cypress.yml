@@ -1,28 +1,14 @@
-name: Cypress Tests Run on Pipeline
-on: [push]
-jobs:
-  cypress-run:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false # https://github.com/cypress-io/github-action/issues/48
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Install Cypress
-        run: npm install
-      - name: Cypress run
-        id: cypress
-        uses: cypress-io/github-action@v4
-        with:
-          browser: chrome
-- uses: actions/upload-artifact@v3
+      # Test run video was always captured, so this action uses "always()" condition
+      - name: Upload Cypress Screenshots
         if: failure()
+        uses: actions/upload-artifact@v3
         with:
           name: cypress-screenshots
           path: cypress/screenshots
       # Test run video was always captured, so this action uses "always()" condition
-      - uses: actions/upload-artifact@v3
+      - name: Upload Cypress Videos
         if: always()
+        uses: actions/upload-artifact@v3
         with:
           name: cypress-videos
           path: cypress/videos
